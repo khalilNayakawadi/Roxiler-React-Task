@@ -1,0 +1,249 @@
+<Card variant="outlined"
+                sx={{
+                    width: { xs: "80%", md: "750px", lg: "1500px" },
+                    margin: "auto",
+                    marginY: 2,
+                    cursor: 'default',
+                    zIndex: 1,
+                    borderRadius: '20px'
+
+                }}>
+
+                <CardContent sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    p: 3,
+                    backgroundColor: '#101010',
+                    borderRadius: '20px'
+                }}>
+
+                    <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", margin: 1, color: 'white' }}>
+
+                        <form
+                            sx={{ color: 'white' }}
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                setIsSearch(true)
+
+                            }}>
+
+                            <TextField
+                                sx={{
+                                    width: "300px",
+                                    '& .MuiInputBase-root': {
+                                        color: 'white',
+                                        backgroundColor: 'black',
+                                        // border: "1px solid white",
+                                    },
+                                    '& .MuiOutlinedInput-root': {
+                                        '& fieldset': {
+                                            borderColor: 'white',
+                                        },
+                                        '&:hover fieldset': {
+                                            borderColor: 'white',
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: 'white',
+                                        },
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                        color: 'white',
+                                    },
+                                    '& .MuiInputLabel-root.Mui-focused': {
+                                        color: 'white',
+                                    },
+                                    '& .MuiOutlinedInput-input': {
+                                        color: 'white',
+                                        backgroundColor: 'black',
+                                    },
+                                    '& .MuiInputAdornment-root .MuiTypography-root': {
+                                        color: 'white',
+                                    },
+                                    '& .MuiSvgIcon-root': {
+                                        color: 'white',
+                                    },
+                                    marginRight: '20px',
+                                    borderRadius: '20px',
+                                }}
+                                label="Search Transaction"
+                                // autoFocus
+                                value={transaction}
+                                onChange={(ev) => {
+                                    console.log(ev)
+                                    ev.preventDefault()
+                                    setTransaction(ev.target.value)
+                                }
+                                }
+                                autoComplete="off"
+                            />
+
+                            <Button variant='contained'
+                                sx={{
+                                    height: "40px",
+                                    width: "100px",
+                                    color: 'white', // text color
+                                    backgroundColor: 'transparent', // make the background transparent
+                                    border: '1px solid white', // add white border
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(255, 255, 255, 0.1)', // slight background color change on hover
+                                        borderColor: 'text.primary',
+                                    }, marginTop: '4px', borderRadius: '20px'
+                                }} onClick={(ev) => {
+                                    ev.preventDefault();
+                                    setIsSearch(true)
+                                }}>Search</Button>
+                        </form>
+
+                        <FormControl sx={{
+                            minWidth: 120, color: 'white',
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: 'black',
+                                },
+                                '&:hover fieldset': {
+                                    borderColor: 'white',
+                                    color: "white"
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: 'white',
+                                },
+                            },
+                        }}>
+                            <Select
+                                labelId="month-label"
+                                value={selectedMonth}
+                                label="Month"
+                                onChange={handleMonthChange}
+                                sx={{
+                                    width: '200px',
+                                    color: 'white',
+                                    border: "1px solid white",
+                                    '.MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'white',
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'white',
+                                    },
+                                    '&.Mui-focused': {
+                                        color: 'white',
+                                        '.MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'white',
+                                        },
+                                    },
+                                }}
+
+                            >
+                                <MenuItem value="1">January</MenuItem>
+                                <MenuItem value="2">February</MenuItem>
+                                <MenuItem value="3">March</MenuItem>
+                                <MenuItem value="4">April</MenuItem>
+                                <MenuItem value="5">May</MenuItem>
+                                <MenuItem value="6">June</MenuItem>
+                                <MenuItem value="7">July</MenuItem>
+                                <MenuItem value="8">August</MenuItem>
+                                <MenuItem value="9">September</MenuItem>
+                                <MenuItem value="10">October</MenuItem>
+                                <MenuItem value="11">November</MenuItem>
+                                <MenuItem value="12">December</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <TableContainer component={Paper} sx={{ marginBottom: '10px', marginTop: '5px' }}>
+                        <Table size="small" aria-label="simple table" sx={{ background: '#323232' }}>
+                            <TableHead sx={{ padding: '20px', color: 'white' }}>
+                                <TableRow sx={{ padding: '20px' }}>
+                                    <TableCell sx={{ color: "white", padding: '20px' }} align="center">ID</TableCell>
+                                    <TableCell sx={{ color: "white", padding: '20px' }} align="center">Title</TableCell>
+                                    <TableCell sx={{ color: "white", padding: '20px' }} align="center">Description</TableCell>
+                                    <TableCell sx={{ color: "white", padding: '20px' }} align="center">Price</TableCell>
+                                    <TableCell sx={{ color: "white", padding: '20px' }} align="center">Category</TableCell>
+                                    <TableCell sx={{ color: "white", padding: '20px' }} align="center">Sold</TableCell>
+                                    <TableCell sx={{ color: "white", padding: '20px' }} align="center">Images</TableCell>
+
+                                </TableRow>
+                            </TableHead>
+
+                            <TableBody>
+                                {products.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((e, idx) => (
+                                    <TableRow key={idx} sx={{ backgroundColor: idx % 2 === 0 ? '#343a40' : '#212529' }}>
+                                        <TableCell align="left" sx={{ color: "white" }}>{e.id}</TableCell>
+                                        <TableCell align="left" sx={{ color: "white" }}>{e.title}</TableCell>
+                                        <TableCell align="left" sx={{ color: "white" }}>{e.description}</TableCell>
+                                        <TableCell align="left" sx={{ color: "white" }}>{e.price.toFixed(2)}</TableCell>
+                                        <TableCell align="left" sx={{ color: "white" }}>{e.category}</TableCell>
+                                        {console.log(new Date(e.dateOfSale).getMonth() + 1)}
+                                        <TableCell align="left">
+                                            {e.sold ? (
+                                                <Chip label="Sold" sx={{ background: "green", color: "white", width: "70px" }} />
+                                            ) : (
+                                                <Chip label="Unsold" sx={{ background: "red", color: "white", width: "70px" }} />
+                                            )}
+
+
+                                        </TableCell>
+                                        <TableCell align="left">
+
+
+                                            <Box component={"img"} src={e.image}
+                                                sx={{
+                                                    height: "100px",
+                                                    width: "150px",
+                                                    pt: "3px",
+                                                }} /></TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25, 60]}
+                        component="div"
+                        count={products.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        sx={{
+                            '.MuiTablePagination-toolbar': {
+                                color: 'white',
+                            },
+                            '.MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows': {
+                                color: 'white',
+                            },
+                            '.MuiSelect-icon': {
+                                color: 'white',
+                                borderColor: 'white',
+                            },
+                            '.MuiTablePagination-select': {
+                                color: 'white',
+                                borderColor: 'white',
+                            },
+                            '.MuiTablePagination-actions': {
+                                color: 'white',
+                            },
+                            '.MuiButtonBase-root': {
+                                color: 'white',
+                            },
+                            '.MuiIconButton-root': {
+                                color: 'white',
+                            },
+                            '.MuiOutlinedInput-root': {
+                                color: 'white',
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    borderColor: 'white',
+                                },
+                                '&:hover .MuiOutlinedInput-notchedOutline': {
+                                    borderColor: 'white',
+                                },
+                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                    borderColor: 'white',
+                                },
+                            },
+
+                        }}
+                    />
+
+                </CardContent>
+
+            </Card>
